@@ -22,6 +22,7 @@
 ;
 ; set functions for ispell - spell ckecker
 ;
+; http://stackoverflow.com/questions/19022015/emacs-on-mac-os-x-how-to-get-spell-check-to-work
 (autoload 'ispell "ispell" "Run ispell over buffer" t)
 (autoload 'ispell-region "ispell" "Run ispell over region" t)
 (autoload 'ispell-word "ispell" "Check word under cursor" t)
@@ -146,6 +147,11 @@
 
 (provide 'js-beautify)
 ;;; js-beautify.el ends here
+
+;; Org mode
+(setq org-todo-keywords '((type "TODO" "WAITING" "|" "CANCELED" "DONE")))
+
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
 ;; Have different display options based on if we are running in a terminal
 ;; or running in a windowing environment.
