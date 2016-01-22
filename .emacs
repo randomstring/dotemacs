@@ -147,20 +147,13 @@
 (provide 'js-beautify)
 ;;; js-beautify.el ends here
 
-
-;; (print (getenv "SSH_CONNECTION"))
-
-;; old way
-;;(if (equal (getenv "SSH_CONNECTION") nil)
-(print (display-graphic-p))
-
+;; Have different display options based on if we are running in a terminal
+;; or running in a windowing environment.
 (if (display-graphic-p)
     ;; directly logged in probably using X11
     (custom-set-faces
-     '(default ((t (:stipple nil :background "#ffffff" :foreground "#000000" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "unknown" :family "Inconsolata")))))
-    ;; logged in via ssh
-    (custom-set-faces
-     '(default ((t (:stipple nil :background nil :foreground nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal )))))
-    )
-
-
+     '(default ((t (:stipple nil :background "#000000" :foreground "#eeeeee" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 160 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
+  ;; logged in via ssh
+  (custom-set-faces
+   '(default ((t (:stipple nil :background nil :foreground nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal )))))
+  )
