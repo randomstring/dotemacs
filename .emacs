@@ -153,6 +153,13 @@
 
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
+;; Markdown mode
+(autoload 'markdown-mode "markdown-mode" "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+(setq markdown-command "/usr/local/bin/markdown")
+
 ;; Have different display options based on if we are running in a terminal
 ;; or running in a windowing environment.
 (if (display-graphic-p)
