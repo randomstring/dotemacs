@@ -27,3 +27,13 @@ Using [http://emacsformacosx.com/ Emacs for Mac OS X]
 Background is black to avoid wearing out the eyes or lighting up the room (or airplane) when programming in low-light situations.
 
 Foreground is almost white: #eeeeee.
+
+## Markdown mode
+
+http://jblevins.org/projects/markdown-mode/
+
+Need to install the mac markdown command:
+
+> brew install markdown
+
+Then just hit C-c C-c p to open a preview page in your default browser.
