@@ -23,6 +23,7 @@
 ; set functions for ispell - spell ckecker
 ;
 ; http://stackoverflow.com/questions/19022015/emacs-on-mac-os-x-how-to-get-spell-check-to-work
+(setq ispell-program-name "/usr/local/bin/aspell")
 (autoload 'ispell "ispell" "Run ispell over buffer" t)
 (autoload 'ispell-region "ispell" "Run ispell over region" t)
 (autoload 'ispell-word "ispell" "Check word under cursor" t)
@@ -81,10 +82,10 @@
 (add-to-list 'auto-mode-alist '("\\.tt$" . html-mode))
 
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(auto-compression-mode t nil (jka-compr))
  '(case-fold-search t)
  '(cperl-brace-offset 0)
@@ -99,6 +100,7 @@
  '(global-font-lock-mode t nil (font-lock))
  '(inhibit-startup-screen t)
  '(menu-bar-mode t)
+ '(org-agenda-files nil)
  '(safe-local-variable-values (quote ((c-basic-indent . 4)))))
 
 (defun ask-before-closing ()
@@ -149,9 +151,15 @@
 ;;; js-beautify.el ends here
 
 ;; Org mode
-(setq org-todo-keywords '((type "TODO" "WAITING" "|" "CANCELED" "DONE")))
+;;(setq org-todo-keywords '((type "TODO" "WAITING" "|" "CANCELED" "DONE")))
 
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+
+(setq org-directory "~/Dropbox/TODO")
+(setq org-agenda-files (list "~/Dropbox/TODO"))
+(setq org-archive-location "~/Dropbox/TODO_archive")
+(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+(setq org-mobile-inbox-for-pull "~/DropBox/Apps/MobileOrg/mobile.org")
 
 ;; Markdown mode
 (autoload 'markdown-mode "markdown-mode" "Major mode for editing Markdown files" t)
@@ -170,3 +178,9 @@
   (custom-set-faces
    '(default ((t (:stipple nil :background nil :foreground nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal )))))
   )
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:stipple nil :background "#000000" :foreground "#eeeeee" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 160 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
