@@ -4,13 +4,16 @@
 ; set backspace key to do backwards delete
 ;
 (global-set-key "\C-h" 'backward-delete-char-untabify)
-;(global-set-key "\C-q" 'help-for-help)
-(global-set-key "\C-u" 'undo)
+;; I used to use C-u for undo, now I have mac Command-Z
+;(global-set-key "\C-u" 'undo)
 
-; make the "end" key map to the end of the line
+; make the "end" key map to the end of the line, not needed on small
+; keyboards or on Macs. Useful for HUGE keyboards with "End" keys.
 (define-key esc-map "[" 'end-of-line)
 
-; turn off that damn overwrite mode
+; turn off that damn overwrite mode. This was a problem with HUGE
+; keyboards with the "Insert" key right next to "Del" accidently
+; triggering overwrite mode is crazy annoying.
 (global-set-key [insert] 'nil)
 (global-set-key [kp_insert] 'nil)
 
@@ -41,7 +44,7 @@
 (put 'eval-expression 'disabled nil)
 
 ;; Make the sequence "C-x C-j" execute the `goto-line' command,
-;; which prompts for a line number to jump to.
+;; which prompts for a line number to jump to. J for Jump to line.
 (global-set-key "\C-x\C-j" 'goto-line)
 (global-set-key "\C-xj" 'goto-line)
 
@@ -58,14 +61,14 @@
 ;; Mecurial
 (load "~/.emacs.d/mercurial.el")
 
-;; Start emacsserver
+;; Start emacsserver: I found this more annoying than useful
 ;; (server-start)
 
+; enable mouse wheel scrolling
 (require 'mwheel)
 (setq which-function-modes t)
 
 ;; tab fixing
-
 (add-hook 'perl-mode-hook 'my-perl-mode-hook)
 
 (defun untabify-buffer ()
@@ -78,7 +81,9 @@
   (add-hook 'local-write-file-hooks 'untabify-buffer)
   (setq indent-tabs-mode nil))
 
+; treat .t as perl code
 (add-to-list 'auto-mode-alist '("\\.t$" . perl-cmode))
+; treat .tt (perl template toolkit) as html mode
 (add-to-list 'auto-mode-alist '("\\.tt$" . html-mode))
 
 (custom-set-variables
@@ -103,6 +108,7 @@
  '(org-agenda-files nil)
  '(safe-local-variable-values (quote ((c-basic-indent . 4)))))
 
+
 (defun ask-before-closing ()
   "Ask whether or not to close, and then close if y was pressed"
   (interactive)
@@ -116,7 +122,6 @@
   (global-set-key (kbd "C-x C-c") 'ask-before-closing))
 
 ;;; js-beautify.el -- beautify some js code
-
 (defgroup js-beautify nil
   "Use jsbeautify to beautify some js"
   :group 'editing)
@@ -152,9 +157,7 @@
 
 ;; Org mode
 ;;(setq org-todo-keywords '((type "TODO" "WAITING" "|" "CANCELED" "DONE")))
-
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-
 (setq org-directory "~/Dropbox/TODO")
 (setq org-agenda-files (list "~/Dropbox/TODO"))
 (setq org-archive-location "~/Dropbox/TODO_archive")
@@ -163,14 +166,15 @@
 
 ;; Markdown mode
 ;; to preview: C-c C-c p
+;; to install /usr/local/bin/markdown on the mac run "brew install markdown"
 (autoload 'markdown-mode "markdown-mode" "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-
 (setq markdown-command "/usr/local/bin/markdown")
 
 ;; Have different display options based on if we are running in a terminal
 ;; or running in a windowing environment.
+;; ACTUALLY, now I think the settings work for both.
 (if (display-graphic-p)
     ;; directly logged in probably using X11
     (custom-set-faces
@@ -179,6 +183,7 @@
   (custom-set-faces
    '(default ((t (:stipple nil :background nil :foreground nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal )))))
   )
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
