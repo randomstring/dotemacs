@@ -121,7 +121,12 @@
 (when window-system
   (global-set-key (kbd "C-x C-c") 'ask-before-closing))
 
-;;; js-beautify.el -- beautify some js code
+;; js-beautify.el -- beautify some js code
+; pip install jsbeautifier
+; /Users/dole/anaconda/bin/js-beautify
+;
+; Consider using https://github.com/yasuyk/web-beautify/blob/master/web-beautify.el
+;
 (defgroup js-beautify nil
   "Use jsbeautify to beautify some js"
   :group 'editing)
@@ -132,7 +137,7 @@
   :type '(string)
   :group 'js-beautify)
 
-(defcustom js-beautify-path "~/bin/js-beautify"
+(defcustom js-beautify-path "/Users/dole/anaconda/bin/js-beautify"
   "Path to jsbeautifier python file"
   :type '(string)
   :group 'js-beautify)
