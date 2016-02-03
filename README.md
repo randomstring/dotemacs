@@ -37,3 +37,7 @@ Need to install the mac markdown command:
 > brew install markdown
 
 Then just hit C-c C-c p to open a preview page in your default browser.
+
+## js-beautify
+
+> pip install jsbeautifier
