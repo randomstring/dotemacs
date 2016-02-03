@@ -105,7 +105,6 @@
  '(global-font-lock-mode t nil (font-lock))
  '(inhibit-startup-screen t)
  '(menu-bar-mode t)
- '(org-agenda-files nil)
  '(safe-local-variable-values (quote ((c-basic-indent . 4)))))
 
 
@@ -123,7 +122,7 @@
 
 ;; js-beautify.el -- beautify some js code
 ; pip install jsbeautifier
-; /Users/dole/anaconda/bin/js-beautify
+; ~/anaconda/bin/js-beautify
 ;
 ; Consider using https://github.com/yasuyk/web-beautify/blob/master/web-beautify.el
 ;
@@ -137,7 +136,7 @@
   :type '(string)
   :group 'js-beautify)
 
-(defcustom js-beautify-path "/Users/dole/anaconda/bin/js-beautify"
+(defcustom js-beautify-path "~/anaconda/bin/js-beautify"
   "Path to jsbeautifier python file"
   :type '(string)
   :group 'js-beautify)
@@ -164,10 +163,27 @@
 ;;(setq org-todo-keywords '((type "TODO" "WAITING" "|" "CANCELED" "DONE")))
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (setq org-directory "~/Dropbox/TODO")
-(setq org-agenda-files (list "~/Dropbox/TODO"))
+(setq org-agenda-files (list "~/Dropbox/TODO" "~/Box Sync/TODO"))
 (setq org-archive-location "~/Dropbox/TODO_archive")
 (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
 (setq org-mobile-inbox-for-pull "~/DropBox/Apps/MobileOrg/mobile.org")
+
+
+; org-mode hot keys
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-cb" 'org-iswitchb)
+
+(defun html-org-mode-save-hook()
+  "Export org-mode as HTML save hook"
+  (message "Save HTML version")
+  (org-html-export-to-html)
+  )
+
+(add-hook 'org-mode-hook 
+          (lambda () 
+             (add-hook 'after-save-hook 'html-org-mode-save-hook nil 'make-it-local)))
 
 ;; Markdown mode
 ;; to preview: C-c C-c p
