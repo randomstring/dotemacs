@@ -167,7 +167,7 @@
 (setq org-archive-location "~/Dropbox/TODO_archive")
 (setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
 (setq org-mobile-inbox-for-pull "~/DropBox/Apps/MobileOrg/mobile.org")
-
+(setq org-log-done 'time)
 
 ; org-mode hot keys
 (global-set-key "\C-ca" 'org-agenda)
