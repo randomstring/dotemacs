@@ -1,9 +1,10 @@
 (setq user-emacs-directory "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d")
 ;
-; set backspace key to do backwards delete
-;
-(global-set-key "\C-h" 'backward-delete-char-untabify)
+; in the stone ages the backspace key would generate C-h
+; and making it behave required a heavy hand.
+;(global-set-key "\C-h" 'backward-delete-char-untabify)
+
 ;; I used to use C-u for undo, now I have mac Command-Z
 ;(global-set-key "\C-u" 'undo)
 
@@ -53,9 +54,19 @@
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;; CSS mode
-(autoload 'css-mode "css-mode")
+(autoload 'css-mode "css-mode" nil t)
 (setq auto-mode-alist
       (cons '("\\.css\\'" . css-mode) auto-mode-alist))
+
+; treat .t as perl code
+(add-to-list 'auto-mode-alist '("\\.t$" . perl-cmode))
+; treat .tt (perl template toolkit) as html mode
+(add-to-list 'auto-mode-alist '("\\.tt$" . html-mode))
+
+;; octave and matlab mode
+(autoload 'octave-mode "octave" nil t)
+(setq auto-mode-alist
+      (cons '("\\.m$" . octave-mode) auto-mode-alist))
 
 ;;
 ;; Mecurial
@@ -66,6 +77,8 @@
 
 ; enable mouse wheel scrolling
 (require 'mwheel)
+; disable progressive speed scroll that is overkill for the trackpad
+(setq mouse-wheel-progressive-speed nil)
 (setq which-function-modes t)
 
 ;; tab fixing
@@ -80,11 +93,6 @@
   (add-hook 'local-write-file-hooks 'delete-trailing-whitespace)
   (add-hook 'local-write-file-hooks 'untabify-buffer)
   (setq indent-tabs-mode nil))
-
-; treat .t as perl code
-(add-to-list 'auto-mode-alist '("\\.t$" . perl-cmode))
-; treat .tt (perl template toolkit) as html mode
-(add-to-list 'auto-mode-alist '("\\.tt$" . html-mode))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
