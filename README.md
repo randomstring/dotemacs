@@ -4,12 +4,14 @@ There are many .emacs files, this one is mine.
 
 ## Setup
 
-> mkdir ~/git
-> cd ~/git
-> git clone clone git@github.com:randomstring/dotemacs.git
-> ln -s ~/git/dotemacs/.emacs .emacs
-> mkdir ~/.emacs.d
-> cp ~/git/dotemacs/.emacs.d/* ~/.emacs.d/
+```
+ mkdir ~/git
+ cd ~/git
+ git clone clone git@github.com:randomstring/dotemacs.git
+ ln -s ~/git/dotemacs/.emacs .emacs
+ mkdir ~/.emacs.d
+ cp ~/git/dotemacs/.emacs.d/* ~/.emacs.d/
+```
 
 ## Fonts
 
@@ -43,14 +45,19 @@ http://jblevins.org/projects/markdown-mode/
 
 Need to install the mac markdown command on the Mac:
 
-> brew install markdown
-
+```
+ brew install markdown
+```
 Or to install on a raspberry pi:
 
-> sudo apt-get install markdown
+```
+ sudo apt-get install markdown
+```
 
 Then just hit C-c C-c p to open a preview page in your default browser.
 
 ## js-beautify
 
-> pip install jsbeautifier
+```
+  pip install jsbeautifier
+```
