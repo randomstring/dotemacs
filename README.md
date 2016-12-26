@@ -2,6 +2,15 @@
 
 There are many .emacs files, this one is mine.
 
+## Setup
+
+> mkdir ~/git
+> cd ~/git
+> git clone clone git@github.com:randomstring/dotemacs.git
+> ln -s ~/git/dotemacs/.emacs .emacs
+> mkdir ~/.emacs.d
+> cp ~/git/dotemacs/.emacs.d/* ~/.emacs.d/
+
 ## Fonts
 
 Picking DejaVu Mono spaced font. Top contenders were DejaVu, Inconsolata (-dz and -g) versions, and the Mac New Courier font. I've fallen out of love with Inconsolata-dz because the annoying -dz in the name confuses so many font parsers. Including Emacs. The Mac's New Courier has a nice feel, but the 1/l/O/0 characters are too similar. Microsoft's Consolata looks great, but requires either buying the fonts or installing Microsoft Office. DejaVu is Open Source and has extensive Unicode support.
@@ -32,9 +41,13 @@ Foreground is almost white: #eeeeee.
 
 http://jblevins.org/projects/markdown-mode/
 
-Need to install the mac markdown command:
+Need to install the mac markdown command on the Mac:
 
 > brew install markdown
+
+Or to install on a raspberry pi:
+
+> sudo apt-get install markdown
 
 Then just hit C-c C-c p to open a preview page in your default browser.
 
