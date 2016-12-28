@@ -1,5 +1,8 @@
 (setq user-emacs-directory "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d")
+
+;; TODO get packages working: https://stable.melpa.org/#/getting-started
+
 ;
 ; in the stone ages the backspace key would generate C-h
 ; and making it behave required a heavy hand.
@@ -200,6 +203,11 @@
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 (setq markdown-command "/usr/local/bin/markdown")
+
+;; Github flavored Markdown
+(autoload 'gfm-mode "gfm-mode"
+   "Major mode for editing GitHub Flavored Markdown files" t)
+(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 
 ;; Have different display options based on if we are running in a terminal
 ;; or running in a windowing environment.
