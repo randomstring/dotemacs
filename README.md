@@ -30,6 +30,17 @@ Using Inconsolata (-dz and -g) versions, and the Mac New Courier font. I've fall
 
 [Get DejaVu fonts Here](http://dejavu-fonts.org/wiki/index.php?title=Main_Page)
 
+### Installing Fonts via brew
+
+Installing fonts on the Mac.
+
+```
+ brew tap caskroom/fonts
+ brew cask install font-inconsolata
+ brew cask install font-dejavu-sans-mono-for-powerline
+ brew cask install font-dejavu-sans
+```
+
 ## Background Colors
 
 Background is black to avoid wearing out the eyes or lighting up the room (or airplane) when programming in low-light situations.
@@ -45,6 +56,7 @@ Need to install the mac markdown command on the Mac:
 ```
  brew install markdown
 ```
+
 Or to install on a raspberry pi:
 
 ```
