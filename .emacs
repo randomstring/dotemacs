@@ -1,7 +1,10 @@
+;; TODO get packages working: https://stable.melpa.org/#/getting-started
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(package-initialize)
+
 (setq user-emacs-directory "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d")
-
-;; TODO get packages working: https://stable.melpa.org/#/getting-started
 
 ;
 ; in the stone ages the backspace key would generate C-h
@@ -116,6 +119,7 @@
  '(global-font-lock-mode t nil (font-lock))
  '(inhibit-startup-screen t)
  '(menu-bar-mode t)
+ '(package-selected-packages (quote (auto-complete markdown-mode jedi ##)))
  '(safe-local-variable-values (quote ((c-basic-indent . 4)))))
 
 
@@ -210,6 +214,10 @@
    "Major mode for editing GitHub Flavored Markdown files" t)
 (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
 
+; python jedi
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
+
 ;; Have different display options based on if we are running in a terminal
 ;; or running in a windowing environment.
 ;; ACTUALLY, now I think the settings work for both.
@@ -228,3 +236,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:stipple nil :background "#000000" :foreground "#eeeeee" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 160 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
+
+
+
+
