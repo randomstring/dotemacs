@@ -1,7 +1,13 @@
 ;; TODO get packages working: https://stable.melpa.org/#/getting-started
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives
+             '("elpy" . "https://jorgenschaefer.github.io/packages/"))
 (package-initialize)
+
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+(setq exec-path (append exec-path '("/usr/local/bin")))
+
 
 (setq user-emacs-directory "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d")
@@ -14,6 +20,40 @@
 (use-package ruby-mode
   :mode "\\.rb\\'"
   :interpreter "ruby")
+
+(use-package elpy
+  :ensure t
+  :defer 2
+  :config
+  (progn
+    (elpy-enable)
+    ;; jedi is great
+    (setq elpy-rpc-backend "jedi")))
+
+(use-package web-mode
+  :ensure t
+  :defer 2
+  :bind (("C-c C-v" . browse-url-of-buffer)
+         ("C-c w t" . web-mode-element-wrap))
+  :init
+  (progn
+    (add-to-list 'auto-mode-alist '("\\.html?" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.php$" . web-mode)))
+  :config
+  (progn
+    ;; Set tab to 4 to play nice with plebeian editors
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-css-indent-offset 4)
+    (setq web-mode-code-indent-offset 4)))
+
+(use-package js2-mode
+  :ensure t
+  :mode ("\\.js\\'" "\\.json\\'")
+  :interpreter "node")
+
+(use-package css-mode
+  :init
+  :mode ("\\.css\\'"))
 
 ;
 ; in the stone ages the backspace key would generate C-h
@@ -63,15 +103,6 @@
 ;; which prompts for a line number to jump to. J for Jump to line.
 (global-set-key "\C-x\C-j" 'goto-line)
 (global-set-key "\C-xj" 'goto-line)
-
-;; javascript mode
-(autoload 'js2-mode "js2" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-
-;; CSS mode
-(autoload 'css-mode "css-mode" nil t)
-(setq auto-mode-alist
-      (cons '("\\.css\\'" . css-mode) auto-mode-alist))
 
 ; treat .t as perl code
 (add-to-list 'auto-mode-alist '("\\.t$" . perl-cmode))
@@ -222,10 +253,6 @@
 (autoload 'gfm-mode "markdown-mode"
    "Major mode for editing GitHub Flavored Markdown files" t)
 (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
-
-; python jedi
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
 
 ;; Have different display options based on if we are running in a terminal
 ;; or running in a windowing environment.
