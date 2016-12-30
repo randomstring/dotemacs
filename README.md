@@ -49,12 +49,14 @@ Or to install on a raspberry pi:
  sudo apt-get install markdown
 ```
 
-Then just hit C-c C-c p to open a preview page in your default browser.
+Then just hit ``C-c C-c p`` to open a preview page in your default browser, or ``C-c C-c l`` to open a side-by-side preview.
 
-## js-beautify
+
+## Installing pip Modules
 
 ```
-  pip install jsbeautifier
+ pip install jsbeautifier
+ pip install jedi flake8 importmagic autopep8
 ```
 
 ## Acknowledgments
