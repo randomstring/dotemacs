@@ -146,8 +146,13 @@
 ;; Mecurial
 (load "~/.emacs.d/mercurial.el")
 
-;; Start emacsserver: I found this more annoying than useful
-;; (server-start)
+;;----------------------------------------------------------------------------
+;; Allow access from emacsclient
+;;----------------------------------------------------------------------------
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
 
 ; enable mouse wheel scrolling
 (require 'mwheel)
@@ -300,7 +305,3 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:stipple nil :background "#000000" :foreground "#eeeeee" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 160 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
-
-
-
-
