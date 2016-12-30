@@ -26,8 +26,13 @@
   :defer 2
   :config
   (progn
+    ;; Use Flycheck instead of Flymake
+    (when (require 'flycheck nil t)
+      (remove-hook 'elpy-modules 'elpy-module-flymake)
+      (remove-hook 'elpy-modules 'elpy-module-yasnippet)
+      (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
+      (add-hook 'elpy-mode-hook 'flycheck-mode))
     (elpy-enable)
-    ;; jedi is great
     (setq elpy-rpc-backend "jedi")))
 
 (use-package web-mode
@@ -54,6 +59,29 @@
 (use-package css-mode
   :init
   :mode ("\\.css\\'"))
+
+
+;; full screen magit-status
+(defadvice magit-status (around magit-fullscreen activate)
+  (window-configuration-to-register :magit-fullscreen)
+  ad-do-it
+  (delete-other-windows))
+
+;; Restore windows after exiting magit
+(defun magit-quit-session ()
+  "Restores the previous window configuration and kills the magit buffer"
+  (interactive)
+  (kill-buffer)
+  (jump-to-register :magit-fullscreen))
+
+(use-package magit
+  :ensure t
+  :defer 2
+  :diminish magit-auto-revert-mode
+  :init
+  (setq magit-last-seen-setup-instructions "1.4.0")
+  :config
+  (bind-key "q" 'magit-quit-session magit-status-mode-map))
 
 ;
 ; in the stone ages the backspace key would generate C-h
