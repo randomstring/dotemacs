@@ -7,10 +7,9 @@ There are many .emacs files, this one is mine.
 ```
  mkdir ~/git
  cd ~/git
- git clone clone git@github.com:randomstring/dotemacs.git
+ git clone git@github.com:randomstring/dotemacs.git
  ln -s ~/git/dotemacs/.emacs .emacs
- mkdir ~/.emacs.d
- cp ~/git/dotemacs/.emacs.d/* ~/.emacs.d/
+ ln -s ~/git/dotemacs/.emacs.d .emacs.d
 ```
 
 ## Mac Compatibility
@@ -18,7 +17,6 @@ There are many .emacs files, this one is mine.
 Stopped using the default Emacs that ships with Mac. This Emacs is old (version 22) and doesn't play well with iTerm2.
 
 Using [Emacs for Mac OS X](https://emacsformacosx.com/)
-
 
 ## Fonts
 
@@ -58,3 +56,9 @@ Then just hit C-c C-c p to open a preview page in your default browser.
 ```
   pip install jsbeautifier
 ```
+
+## Acknowledgments
+
+There were many sources of inspiration here are a few:
+
+* [Adam Schwartz's emacs.d](https://github.com/anschwa/emacs.d)
