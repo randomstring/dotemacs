@@ -6,6 +6,15 @@
 (setq user-emacs-directory "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d")
 
+(eval-when-compile
+  (require 'use-package))
+(require 'diminish)                ;; if you use :diminish
+(require 'bind-key)                ;; if you use any :bind variant
+
+(use-package ruby-mode
+  :mode "\\.rb\\'"
+  :interpreter "ruby")
+
 ;
 ; in the stone ages the backspace key would generate C-h
 ; and making it behave required a heavy hand.
