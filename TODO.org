@@ -1,0 +1,10 @@
+* TODO clean up install process
+** TODO separate .el files (init.el, keybindings.el, packages, custom.el, etc)
+** TODO simple .emacs file that does sanity checks
+*** TODO warn for old emacs
+*** TODO make sure right configs got loaded
+* TODO get elpy fully functional
+** https://elpy.readthedocs.io/en/latest/introduction.html
+** TODO debug flyckeck/flymake
+** TODO get virtual environments working
+* TODO mine more gold from https://github.com/anschwa/emacs.d
