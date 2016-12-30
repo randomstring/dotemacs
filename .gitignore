@@ -12,10 +12,10 @@ tramp
 session.*
 places
 tramp
-/elpa/
+elpa/
 url
 emms
-/eshell/
+eshell/
 .cask/
 .SyncIgnore
 ido.last
@@ -23,6 +23,6 @@ recentf
 games
 *_archive
 *.rel
-/auto/
+auto/
 .mc-lists.el
 smex-items
