@@ -65,3 +65,4 @@ There were many sources of inspiration here are a few:
 
 * [Adam Schwartz's emacs.d](https://github.com/anschwa/emacs.d)
 * [Steve Purcell](https://github.com/purcell/emacs.d)
+* [Jessica B. Hamrick](https://github.com/jhamrick/emacs)
