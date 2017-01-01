@@ -83,6 +83,14 @@
   :config
   (bind-key "q" 'magit-quit-session magit-status-mode-map))
 
+; https://github.com/bnbeckwith/writegood-mode
+(use-package writegood-mode
+  :ensure t
+  :defer 2
+  :mode "\\.txt\\'")
+;; Set a global key to toggle the mode
+(global-set-key "\C-cg" 'writegood-mode)
+
 ;
 ; in the stone ages the backspace key would generate C-h
 ; and making it behave required a heavy hand.
