@@ -12,6 +12,8 @@ There are many .emacs files, this one is mine.
  ln -s ~/git/dotemacs/.emacs.d .emacs.d
 ```
 
+Need to manually install use-package in emacs first. ``M-x package-install RET use-package RET``
+
 ## Mac Compatibility
 
 Stopped using the default Emacs that ships with Mac. This Emacs is old (version 22) and doesn't play well with iTerm2.
@@ -56,7 +58,7 @@ Then just hit ``C-c C-c p`` to open a preview page in your default browser, or `
 
 ```
  pip install jsbeautifier
- pip install jedi flake8 importmagic autopep8
+ pip install rope jedi flake8 importmagic yapf autopep8
 ```
 
 ## Acknowledgments
