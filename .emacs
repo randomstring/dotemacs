@@ -60,12 +60,27 @@
   :init
   :mode ("\\.css\\'"))
 
+(use-package ido
+  :config
+  (ido-mode t)
+  (setq ido-enable-flex-matching t))
+
+(use-package flycheck
+  :ensure t
+  :diminish ""
+  :init
+  (progn
+    (setq flycheck-indication-mode 'left-fringe)
+    ;; disable the annoying doc checker
+    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
+  :config
+  (global-flycheck-mode 1))
 
 ;; full screen magit-status
-(defadvice magit-status (around magit-fullscreen activate)
-  (window-configuration-to-register :magit-fullscreen)
-  ad-do-it
-  (delete-other-windows))
+; (defadvice magit-status (around magit-fullscreen activate)
+;   (window-configuration-to-register :magit-fullscreen)
+;    ad-do-it
+;    (delete-other-windows)))
 
 ;; Restore windows after exiting magit
 (defun magit-quit-session ()
