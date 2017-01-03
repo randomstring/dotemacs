@@ -61,6 +61,10 @@ Then just hit ``C-c C-c p`` to open a preview page in your default browser, or `
  pip install rope jedi flake8 importmagic yapf autopep8
 ```
 
+## Problems
+
+If emacs gets stuck loading a package, you may need to manually refresh the packages with ``package-refresh-contents``. Although ``.emacs`` should handle this automatically now.
+
 ## Acknowledgments
 
 There were many sources of inspiration here are a few:
@@ -68,3 +72,4 @@ There were many sources of inspiration here are a few:
 * [Adam Schwartz's emacs.d](https://github.com/anschwa/emacs.d)
 * [Steve Purcell](https://github.com/purcell/emacs.d)
 * [Jessica B. Hamrick](https://github.com/jhamrick/emacs)
+* [Getting started with use-package](https://github.com/CachesToCaches/getting_started_with_use_package)
