@@ -215,7 +215,6 @@
  '(global-font-lock-mode t nil (font-lock))
  '(inhibit-startup-screen t)
  '(menu-bar-mode t)
- '(package-selected-packages (quote (auto-complete markdown-mode jedi ##)))
  '(safe-local-variable-values (quote ((c-basic-indent . 4)))))
 
 
@@ -297,13 +296,15 @@
              (add-hook 'after-save-hook 'html-org-mode-save-hook nil 'make-it-local)))
 
 ;; Markdown mode
-;; to preview: C-c C-c p
-;; to install /usr/local/bin/markdown on the mac run "brew install markdown"
-(autoload 'markdown-mode "markdown-mode"
-    "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-(setq markdown-command "/usr/local/bin/markdown")
+;; to preview: C-c C-c p or C-c C-c l
+;; to install markdown on the mac run "brew install markdown"
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+	 ("\\.md\\'" . markdown-mode)
+	 ("\\.markdown\\'" . markdown-mode))
+    :init (setq markdown-command "multimarkdown"))
 
 ;; Github flavored Markdown
 (autoload 'gfm-mode "markdown-mode"
