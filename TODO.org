@@ -5,6 +5,7 @@
 *** TODO make sure right configs got loaded
 * TODO get elpy fully functional
 ** https://elpy.readthedocs.io/en/latest/introduction.html
-** TODO debug flyckeck/flymake
+** DONE debug flyckeck/flymake
+   CLOSED: [2017-01-02 Mon 14:21]
 ** TODO get virtual environments working
 * TODO mine more gold from https://github.com/anschwa/emacs.d
