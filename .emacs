@@ -19,6 +19,8 @@
 
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
 (setq exec-path (append exec-path '("/usr/local/bin")))
+(setenv "PATH" (concat (getenv "PATH") ":~/.virtualenvs/default/bin"))
+(setq exec-path (append exec-path '("~/.virtualenvs/default/bin")))
 (setq user-emacs-directory "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d")
 
