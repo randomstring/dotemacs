@@ -54,13 +54,13 @@ http://jblevins.org/projects/markdown-mode/
 Need to install the mac markdown command on the Mac:
 
 ```
- brew install markdown
+ brew install multimarkdown
 ```
 
 Or to install on a raspberry pi:
 
 ```
- sudo apt-get install markdown
+ sudo apt-get install multimarkdown
 ```
 
 Then just hit ``C-c C-c p`` to open a preview page in your default browser, or ``C-c C-c l`` to open a side-by-side preview.
@@ -68,16 +68,22 @@ Then just hit ``C-c C-c p`` to open a preview page in your default browser, or `
 
 ## Installing pip Modules
 
+Start by creating a default python virtual environment, this is where emacs will look first. Use ```M-x pyvenv-workon``` (or use the menu bar ```Virtual Envs```) to switch to a different virtual environment. 
+
 ```
- pip install jsbeautifier
- pip install rope jedi flake8 importmagic yapf autopep8
+ mkvirtualenv default
+ pip install rope jedi flake8 importmagic yapf autopep8 jsbeautifier
 ```
 
 ## Problems
 
 I keep running into the problem that I need to install ```use-package`` first. To do this run ```M-x package-install use-package``` and restart emacs.
 
-If emacs gets stuck loading a package, you may need to manually refresh the packages with ``package-refresh-contents``. Although ``.emacs`` should handle this automatically.
+If emacs gets stuck loading a package, you may need to manually refresh the packages with ``package-refresh-contents``. 
+
+More recent changes should prevent the above problems.
+
+If when loading a python .py file you see flake8 related loading errors. Chances are there is a problem with not having a virtual environment set. Run ```M-x elpy-config``` and make sure things look right. See ``Installing pip Modules`` above.
 
 ## Acknowledgments
 

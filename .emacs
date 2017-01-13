@@ -40,6 +40,9 @@
 (use-package elpy
   :ensure t
   :defer 2
+  :init
+    ;; enable a virtualenv so we have flake8, etc in the path
+    (pyvenv-workon "default")
   :config
   (progn
     ;; Use Flycheck instead of Flymake
