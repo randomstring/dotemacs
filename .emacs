@@ -8,6 +8,8 @@
 (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
 (setq exec-path (append exec-path '("/usr/local/bin")))
 
+;(when (memq window-system '(mac ns))
+;  ( do something mac specific))
 
 (setq user-emacs-directory "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d")
@@ -231,9 +233,6 @@
   (global-set-key (kbd "C-x C-c") 'ask-before-closing))
 
 ;; js-beautify.el -- beautify some js code
-; pip install jsbeautifier
-; ~/anaconda/bin/js-beautify
-;
 ; Consider using https://github.com/yasuyk/web-beautify/blob/master/web-beautify.el
 ;
 (defgroup js-beautify nil
