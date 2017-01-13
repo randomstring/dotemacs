@@ -75,7 +75,9 @@ Then just hit ``C-c C-c p`` to open a preview page in your default browser, or `
 
 ## Problems
 
-If emacs gets stuck loading a package, you may need to manually refresh the packages with ``package-refresh-contents``. Although ``.emacs`` should handle this automatically now.
+I keep running into the problem that I need to install ```use-package`` first. To do this run ```M-x package-install use-package``` and restart emacs.
+
+If emacs gets stuck loading a package, you may need to manually refresh the packages with ``package-refresh-contents``. Although ``.emacs`` should handle this automatically.
 
 ## Acknowledgments
 
