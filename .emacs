@@ -1,7 +1,110 @@
+;; TODO get packages working: https://stable.melpa.org/#/getting-started
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives
+             '("elpy" . "https://jorgenschaefer.github.io/packages/"))
+(package-initialize)
+
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+(setq exec-path (append exec-path '("/usr/local/bin")))
+
+
 (setq user-emacs-directory "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d")
 
-;; TODO get packages working: https://stable.melpa.org/#/getting-started
+(eval-when-compile
+  (require 'use-package))
+(require 'diminish)                ;; if you use :diminish
+(require 'bind-key)                ;; if you use any :bind variant
+
+(use-package ruby-mode
+  :mode "\\.rb\\'"
+  :interpreter "ruby")
+
+(use-package elpy
+  :ensure t
+  :defer 2
+  :config
+  (progn
+    ;; Use Flycheck instead of Flymake
+    (when (require 'flycheck nil t)
+      (remove-hook 'elpy-modules 'elpy-module-flymake)
+      (remove-hook 'elpy-modules 'elpy-module-yasnippet)
+      (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
+      (add-hook 'elpy-mode-hook 'flycheck-mode))
+    (elpy-enable)
+    (setq elpy-rpc-backend "jedi")))
+
+(use-package web-mode
+  :ensure t
+  :defer 2
+  :bind (("C-c C-v" . browse-url-of-buffer)
+         ("C-c w t" . web-mode-element-wrap))
+  :init
+  (progn
+    (add-to-list 'auto-mode-alist '("\\.html?" . web-mode))
+    (add-to-list 'auto-mode-alist '("\\.php$" . web-mode)))
+  :config
+  (progn
+    ;; Set tab to 4 to play nice with plebeian editors
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-css-indent-offset 4)
+    (setq web-mode-code-indent-offset 4)))
+
+(use-package js2-mode
+  :ensure t
+  :mode ("\\.js\\'" "\\.json\\'")
+  :interpreter "node")
+
+(use-package css-mode
+  :init
+  :mode ("\\.css\\'"))
+
+(use-package ido
+  :config
+  (ido-mode t)
+  (setq ido-enable-flex-matching t))
+
+(use-package flycheck
+  :ensure t
+  :diminish ""
+  :init
+  (progn
+    (setq flycheck-indication-mode 'left-fringe)
+    ;; disable the annoying doc checker
+    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
+  :config
+  (global-flycheck-mode 1))
+
+;; full screen magit-status
+; (defadvice magit-status (around magit-fullscreen activate)
+;   (window-configuration-to-register :magit-fullscreen)
+;    ad-do-it
+;    (delete-other-windows)))
+
+;; Restore windows after exiting magit
+(defun magit-quit-session ()
+  "Restores the previous window configuration and kills the magit buffer"
+  (interactive)
+  (kill-buffer)
+  (jump-to-register :magit-fullscreen))
+
+(use-package magit
+  :ensure t
+  :defer 2
+  :diminish magit-auto-revert-mode
+  :init
+  (setq magit-last-seen-setup-instructions "1.4.0")
+  :config
+  (bind-key "q" 'magit-quit-session magit-status-mode-map))
+
+; https://github.com/bnbeckwith/writegood-mode
+(use-package writegood-mode
+  :ensure t
+  :defer 2
+  :mode "\\.txt\\'")
+;; Set a global key to toggle the mode
+(global-set-key "\C-cg" 'writegood-mode)
 
 ;
 ; in the stone ages the backspace key would generate C-h
@@ -52,15 +155,6 @@
 (global-set-key "\C-x\C-j" 'goto-line)
 (global-set-key "\C-xj" 'goto-line)
 
-;; javascript mode
-(autoload 'js2-mode "js2" nil t)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-
-;; CSS mode
-(autoload 'css-mode "css-mode" nil t)
-(setq auto-mode-alist
-      (cons '("\\.css\\'" . css-mode) auto-mode-alist))
-
 ; treat .t as perl code
 (add-to-list 'auto-mode-alist '("\\.t$" . perl-cmode))
 ; treat .tt (perl template toolkit) as html mode
@@ -75,8 +169,13 @@
 ;; Mecurial
 (load "~/.emacs.d/mercurial.el")
 
-;; Start emacsserver: I found this more annoying than useful
-;; (server-start)
+;;----------------------------------------------------------------------------
+;; Allow access from emacsclient
+;;----------------------------------------------------------------------------
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
 
 ; enable mouse wheel scrolling
 (require 'mwheel)
@@ -197,13 +296,15 @@
              (add-hook 'after-save-hook 'html-org-mode-save-hook nil 'make-it-local)))
 
 ;; Markdown mode
-;; to preview: C-c C-c p
-;; to install /usr/local/bin/markdown on the mac run "brew install markdown"
-(autoload 'markdown-mode "markdown-mode"
-    "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-(setq markdown-command "/usr/local/bin/markdown")
+;; to preview: C-c C-c p or C-c C-c l
+;; to install markdown on the mac run "brew install markdown"
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+	 ("\\.md\\'" . markdown-mode)
+	 ("\\.markdown\\'" . markdown-mode))
+    :init (setq markdown-command "multimarkdown"))
 
 ;; Github flavored Markdown
 (autoload 'gfm-mode "markdown-mode"
