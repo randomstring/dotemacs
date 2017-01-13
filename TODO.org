@@ -8,4 +8,5 @@
 ** DONE debug flyckeck/flymake
    CLOSED: [2017-01-02 Mon 14:21]
 ** TODO get virtual environments working
+ - emacs is now virtualenv aware, change workon via menu or command
 * TODO mine more gold from https://github.com/anschwa/emacs.d
