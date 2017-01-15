@@ -308,13 +308,15 @@
 (use-package markdown-mode
   :ensure t
   :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)
-	 ("\\.md\\'" . markdown-mode)
-	 ("\\.markdown\\'" . markdown-mode))
-    :init (setq markdown-command "multimarkdown"))
-
-; no multi-markdown on raspberry pi
-;(setq markdown-command "markdown")
+  :mode
+  (("README\\.md\\'" . gfm-mode)
+   ("\\.md\\'" . markdown-mode)
+   ("\\.markdown\\'" . markdown-mode))
+  :init
+  (if (memq window-system '(mac ns))
+      (setq markdown-command "multimarkdown") ; mac uses multimarkdown
+    (setq markdown-command "markdown"))      ; unix uses markdown
+  )
 
 ;; Github flavored Markdown
 (autoload 'gfm-mode "markdown-mode"
