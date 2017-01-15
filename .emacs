@@ -24,10 +24,6 @@
 (setq user-emacs-directory "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d")
 
-(use-package ruby-mode
-  :mode "\\.rb\\'"
-  :interpreter "ruby")
-
 (use-package flycheck
   :ensure t
   :diminish ""
@@ -121,8 +117,20 @@
 ; and making it behave required a heavy hand.
 ;(global-set-key "\C-h" 'backward-delete-char-untabify)
 
-;; I used to use C-u for undo, now I have mac Command-Z
-;(global-set-key "\C-u" 'undo)
+; Overload Alt-z to do the same as Command-z for rough
+; keyboard equivalence between Linux and Mac keyboards.
+; At least on my linux keyboard, Alt is where the Command
+; key is on my mac. Sorry, no more Zap-to-char shortcut.
+(use-package undo-tree
+  :ensure t
+  :config
+  (progn
+    (global-undo-tree-mode 1) 
+    (defalias 'redo 'undo-tree-redo)
+    (global-set-key "\M-z" 'undo)      ; Alt-z
+    (global-set-key "\M-Z" 'redo)      ; Alt-Z
+    )
+  )
 
 ; make the "end" key map to the end of the line, not needed on small
 ; keyboards or on Macs. Useful for HUGE keyboards with "End" keys.
@@ -143,7 +151,7 @@
 ; set functions for ispell - spell ckecker
 ;
 ; http://stackoverflow.com/questions/19022015/emacs-on-mac-os-x-how-to-get-spell-check-to-work
-(setq ispell-program-name "/usr/local/bin/aspell")
+(setq ispell-program-name "aspell")
 (autoload 'ispell "ispell" "Run ispell over buffer" t)
 (autoload 'ispell-region "ispell" "Run ispell over region" t)
 (autoload 'ispell-word "ispell" "Check word under cursor" t)
@@ -335,9 +343,3 @@
    '(default ((t (:stipple nil :background nil :foreground nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal )))))
   )
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:stipple nil :background "#000000" :foreground "#eeeeee" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 160 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
