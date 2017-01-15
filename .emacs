@@ -306,6 +306,9 @@
 	 ("\\.markdown\\'" . markdown-mode))
     :init (setq markdown-command "multimarkdown"))
 
+; no multi-markdown on raspberry pi
+;(setq markdown-command "markdown")
+
 ;; Github flavored Markdown
 (autoload 'gfm-mode "markdown-mode"
    "Major mode for editing GitHub Flavored Markdown files" t)
