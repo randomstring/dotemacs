@@ -9,3 +9,5 @@
    CLOSED: [2017-01-02 Mon 14:21]
 ** TODO get virtual environments working
 * TODO mine more gold from https://github.com/anschwa/emacs.d
+* TODO check out http://ethanschoonover.com/solarized color theme
+* TODO do we need auto-complete package?
