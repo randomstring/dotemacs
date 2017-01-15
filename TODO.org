@@ -3,11 +3,13 @@
 ** TODO simple .emacs file that does sanity checks
 *** TODO warn for old emacs
 *** TODO make sure right configs got loaded
-* TODO get elpy fully functional
+* DONE get elpy fully functional
+  CLOSED: [2017-01-13 Fri 15:27]
 ** https://elpy.readthedocs.io/en/latest/introduction.html
 ** DONE debug flyckeck/flymake
    CLOSED: [2017-01-02 Mon 14:21]
-** TODO get virtual environments working
+** DONE get virtual environments working
+   CLOSED: [2017-01-13 Fri 15:27]
+ - emacs is now virtualenv aware, change workon via menu or command
 * TODO mine more gold from https://github.com/anschwa/emacs.d
 * TODO check out http://ethanschoonover.com/solarized color theme
-* TODO do we need auto-complete package?

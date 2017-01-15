@@ -1,29 +1,50 @@
-;; TODO get packages working: https://stable.melpa.org/#/getting-started
+;; https://github.com/CachesToCaches/getting_started_with_use_package
 (require 'package)
+(setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives
-             '("elpy" . "https://jorgenschaefer.github.io/packages/"))
+(add-to-list 'package-archives '("elpy" . "https://jorgenschaefer.github.io/packages/"))
 (package-initialize)
 
-(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-(setq exec-path (append exec-path '("/usr/local/bin")))
+;(when (memq window-system '(mac ns))
+;  ( do something mac specific ))
 
-
-(setq user-emacs-directory "~/.emacs.d")
-(add-to-list 'load-path "~/.emacs.d")
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
 (eval-when-compile
   (require 'use-package))
 (require 'diminish)                ;; if you use :diminish
 (require 'bind-key)                ;; if you use any :bind variant
 
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+(setq exec-path (append exec-path '("/usr/local/bin")))
+(setenv "PATH" (concat (getenv "PATH") ":~/.virtualenvs/default/bin"))
+(setq exec-path (append exec-path '("~/.virtualenvs/default/bin")))
+(setq user-emacs-directory "~/.emacs.d")
+(add-to-list 'load-path "~/.emacs.d")
+
 (use-package ruby-mode
   :mode "\\.rb\\'"
   :interpreter "ruby")
 
+(use-package flycheck
+  :ensure t
+  :diminish ""
+  :init
+  (progn
+    (setq flycheck-indication-mode 'left-fringe)
+    ;; disable the annoying doc checker
+    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
+  :config
+  (global-flycheck-mode 1))
+
 (use-package elpy
   :ensure t
   :defer 2
+  :init
+    ;; enable a virtualenv so we have flake8, etc in the path
+    (pyvenv-workon "default")
   :config
   (progn
     ;; Use Flycheck instead of Flymake
@@ -64,17 +85,6 @@
   :config
   (ido-mode t)
   (setq ido-enable-flex-matching t))
-
-(use-package flycheck
-  :ensure t
-  :diminish ""
-  :init
-  (progn
-    (setq flycheck-indication-mode 'left-fringe)
-    ;; disable the annoying doc checker
-    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
-  :config
-  (global-flycheck-mode 1))
 
 ;; full screen magit-status
 ; (defadvice magit-status (around magit-fullscreen activate)
@@ -231,9 +241,6 @@
   (global-set-key (kbd "C-x C-c") 'ask-before-closing))
 
 ;; js-beautify.el -- beautify some js code
-; pip install jsbeautifier
-; ~/anaconda/bin/js-beautify
-;
 ; Consider using https://github.com/yasuyk/web-beautify/blob/master/web-beautify.el
 ;
 (defgroup js-beautify nil

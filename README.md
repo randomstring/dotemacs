@@ -30,6 +30,17 @@ Using Inconsolata (-dz and -g) versions, and the Mac New Courier font. I've fall
 
 [Get DejaVu fonts Here](http://dejavu-fonts.org/wiki/index.php?title=Main_Page)
 
+### Installing Fonts via brew
+
+Installing fonts on the Mac.
+
+```
+ brew tap caskroom/fonts
+ brew cask install font-inconsolata
+ brew cask install font-dejavu-sans-mono-for-powerline
+ brew cask install font-dejavu-sans
+```
+
 ## Background Colors
 
 Background is black to avoid wearing out the eyes or lighting up the room (or airplane) when programming in low-light situations.
@@ -43,9 +54,10 @@ http://jblevins.org/projects/markdown-mode/
 Need to install the mac markdown command on the Mac:
 
 ```
- brew install markdown
+ brew install multimarkdown
 ```
-Or to install on a raspberry pi:
+
+Or to install on a raspberry pi, install plain old markdown. 
 
 ```
  sudo apt-get install markdown
@@ -56,14 +68,22 @@ Then just hit ``C-c C-c p`` to open a preview page in your default browser, or `
 
 ## Installing pip Modules
 
+Start by creating a default python virtual environment, this is where emacs will look first. Use ```M-x pyvenv-workon``` (or use the menu bar ```Virtual Envs```) to switch to a different virtual environment. 
+
 ```
- pip install jsbeautifier
- pip install rope jedi flake8 importmagic yapf autopep8
+ mkvirtualenv default
+ pip install rope jedi flake8 importmagic yapf autopep8 jsbeautifier
 ```
 
 ## Problems
 
-If emacs gets stuck loading a package, you may need to manually refresh the packages with ``package-refresh-contents``. Although ``.emacs`` should handle this automatically now.
+I keep running into the problem that I need to install ```use-package`` first. To do this run ```M-x package-install use-package``` and restart emacs.
+
+If emacs gets stuck loading a package, you may need to manually refresh the packages with ``package-refresh-contents``. 
+
+More recent changes should prevent the above problems.
+
+If when loading a python .py file you see flake8 related loading errors. Chances are there is a problem with not having a virtual environment set. Run ```M-x elpy-config``` and make sure things look right. See ``Installing pip Modules`` above.
 
 ## Acknowledgments
 
