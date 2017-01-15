@@ -12,4 +12,5 @@
    CLOSED: [2017-01-13 Fri 15:27]
  - emacs is now virtualenv aware, change workon via menu or command
 * TODO mine more gold from https://github.com/anschwa/emacs.d
+** TODO use flycheck with spell check
 * TODO check out http://ethanschoonover.com/solarized color theme
