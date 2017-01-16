@@ -77,9 +77,9 @@ Start by creating a default python virtual environment, this is where emacs will
 
 ## Problems
 
-I keep running into the problem that I need to install ```use-package`` first. To do this run ```M-x package-install use-package``` and restart emacs.
+I keep running into the problem that I need to install ```use-package``` first. To do this run ```M-x package-install RET use-package RET``` and restart emacs.
 
-If emacs gets stuck loading a package, you may need to manually refresh the packages with ``package-refresh-contents``. 
+If emacs gets stuck loading a package, you may need to manually refresh the packages with ``M-x package-refresh-contents``. 
 
 More recent changes should prevent the above problems.
 
