@@ -12,13 +12,11 @@ There are many .emacs files, this one is mine.
  ln -s ~/git/dotemacs/.emacs.d .emacs.d
 ```
 
-Need to manually install use-package in emacs first. ``M-x package-install RET use-package RET``
-
 ## Mac Compatibility
 
 Stopped using the default Emacs that ships with Mac. This Emacs is old (version 22) and doesn't play well with iTerm2.
 
-Using [Emacs for Mac OS X](https://emacsformacosx.com/)
+Using the latest version 25.1 from [Emacs for Mac OS X](https://emacsformacosx.com/)
 
 ## Fonts
 
