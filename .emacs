@@ -261,7 +261,7 @@
   :type '(string)
   :group 'js-beautify)
 
-(defcustom js-beautify-path "~/anaconda/bin/js-beautify"
+(defcustom js-beautify-path "js-beautify"
   "Path to jsbeautifier python file"
   :type '(string)
   :group 'js-beautify)
