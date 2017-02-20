@@ -26,3 +26,4 @@ games
 auto/
 .mc-lists.el
 smex-items
+*.html
