@@ -16,3 +16,4 @@
 * TODO mine more gold from https://github.com/anschwa/emacs.d
 ** TODO use flycheck with spell check
 * TODO check out http://ethanschoonover.com/solarized color theme
+* TODO install Tramp https://www.gnu.org/software/tramp/ for remote file editing
