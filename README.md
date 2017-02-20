@@ -8,8 +8,9 @@ There are many .emacs files, this one is mine.
  mkdir ~/git
  cd ~/git
  git clone git@github.com:randomstring/dotemacs.git
- ln -s ~/git/dotemacs/.emacs .emacs
- ln -s ~/git/dotemacs/.emacs.d .emacs.d
+ mv ~/.emacs ~/.emacs.backup
+ mv ~/.emacs.d ~/.emacs.d.backup
+ ln -s ~/git/dotemacs/emacs.d .emacs.d
 ```
 
 ## Mac Compatibility

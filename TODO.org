@@ -1,6 +1,8 @@
 * TODO clean up install process
+** DONE rename .emacs to emacs.d/init.el for simplification
+   CLOSED: [2017-02-19 Sun 21:15]
 ** TODO separate .el files (init.el, keybindings.el, packages, custom.el, etc)
-** TODO simple .emacs file that does sanity checks
+** TODO simple init.el file that does sanity checks
 *** TODO warn for old emacs
 *** TODO make sure right configs got loaded
 * DONE get elpy fully functional
