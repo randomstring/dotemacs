@@ -245,7 +245,9 @@
         (save-buffers-kill-emacs))
     (message "Canceled exit")))
 
-(when window-system
+;; When we're in windows mode X or Mac
+(when (window-system)
+  (tool-bar-mode 0)                   ;; No Toolbar
   (global-set-key (kbd "C-x C-c") 'ask-before-closing))
 
 ;; js-beautify.el -- beautify some js code
@@ -306,9 +308,11 @@
   (org-html-export-to-html)
   )
 
-(add-hook 'org-mode-hook 
-          (lambda () 
-             (add-hook 'after-save-hook 'html-org-mode-save-hook nil 'make-it-local)))
+;; I used to like saving .html versions of all my .org files. I don't find this
+;; useful after all. Org file rendering on github has gotten better.
+;(add-hook 'org-mode-hook 
+;          (lambda () 
+;             (add-hook 'after-save-hook 'html-org-mode-save-hook nil 'make-it-local)))
 
 ;; Markdown mode
 ;; to preview: C-c C-c p or C-c C-c l
@@ -330,6 +334,30 @@
 (autoload 'gfm-mode "markdown-mode"
    "Major mode for editing GitHub Flavored Markdown files" t)
 (add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+
+;; Reopen readonly files as root
+;; from: https://github.com/howardabrams/dot-files/blob/master/emacs.org#editing-root-files
+(defadvice ido-find-file (after find-file-sudo activate)
+  "Find file as root if necessary."
+  (unless (and buffer-file-name
+               (file-writable-p buffer-file-name))
+    (let* ((file-name (buffer-file-name))
+           (file-root (if (string-match "/ssh:\\([^:]+\\):\\(.*\\)" file-name)
+                          (concat "/ssh:"  (match-string 1 file-name)
+                                  "|sudo:" (match-string 1 file-name)
+                                  ":"      (match-string 2 file-name))
+                        (concat "/sudo:localhost:" file-name))))
+      (find-alternate-file file-root))))
+
+;; Write backup files to their own directory, don't pollute dirs with ~ files 
+;; backup files are put in ~/.emacs.d.backups
+(setq backup-directory-alist
+      `(("." . ,(expand-file-name
+                 (concat user-emacs-directory ".backups")))))
+
+(setq vc-make-backup-files t)
+
+(setq initial-scratch-message "") ;; Start with an empty scratch buffer
 
 ;; Have different display options based on if we are running in a terminal
 ;; or running in a windowing environment.
