@@ -1,7 +1,9 @@
+#+TODO: TODO WAITING | CANCELLED DONE
 * TODO clean up install process
 ** DONE rename .emacs to emacs.d/init.el for simplification
    CLOSED: [2017-02-19 Sun 21:15]
-** TODO separate .el files (init.el, keybindings.el, packages, custom.el, etc)
+** CANCELLED separate .el files (init.el, keybindings.el, packages, custom.el, etc)
+   CLOSED: [2018-03-13 Tue 15:09]
 ** TODO simple init.el file that does sanity checks
 *** TODO warn for old emacs
 *** TODO make sure right configs got loaded
@@ -15,5 +17,9 @@
  - emacs is now virtualenv aware, change workon via menu or command
 * TODO mine more gold from https://github.com/anschwa/emacs.d
 ** TODO use flycheck with spell check
-* TODO check out http://ethanschoonover.com/solarized color theme
-* TODO install Tramp https://www.gnu.org/software/tramp/ for remote file editing
+* CANCELLED check out http://ethanschoonover.com/solarized color theme
+  CLOSED: [2018-03-13 Tue 15:09]
+ - I like the default color scheme
+* CANCELLED install Tramp https://www.gnu.org/software/tramp/ for remote file editing
+  CLOSED: [2018-03-13 Tue 15:11]
+ - comes pre-installed (on mac)
