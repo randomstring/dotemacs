@@ -38,6 +38,7 @@ Installing fonts on the Mac.
  brew cask install font-inconsolata
  brew cask install font-dejavu-sans-mono-for-powerline
  brew cask install font-dejavu-sans
+ brew cask install font-fira-code
 ```
 
 ## Background Colors
@@ -92,3 +93,5 @@ There were many sources of inspiration here are a few:
 * [Steve Purcell](https://github.com/purcell/emacs.d)
 * [Jessica B. Hamrick](https://github.com/jhamrick/emacs)
 * [Getting started with use-package](https://github.com/CachesToCaches/getting_started_with_use_package)
+* [Howard Abrams's dot-files](https://github.com/howardabrams/dot-files)
+
