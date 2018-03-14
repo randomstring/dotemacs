@@ -286,33 +286,63 @@
 (provide 'js-beautify)
 ;;; js-beautify.el ends here
 
-;; Org mode
-;;(setq org-todo-keywords '((type "TODO" "WAITING" "|" "CANCELED" "DONE")))
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-(setq org-directory "~/Dropbox/TODO")
-(setq org-agenda-files (list "~/Dropbox/TODO" "~/Box Sync/TODO"))
-(setq org-archive-location "~/Dropbox/TODO_archive")
-(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
-(setq org-mobile-inbox-for-pull "~/DropBox/Apps/MobileOrg/mobile.org")
-(setq org-log-done 'time)
+;; Org Mode stuff starts here
+(use-package ob-core)
+(use-package ox-md)
+(use-package ox-latex)
+(use-package ox-beamer)
 
-; org-mode hot keys
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-cb" 'org-iswitchb)
+(use-package org
+  :ensure t
+  :defer 2
+  :init
+  (progn
+    
+    (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+    (setq org-directory "~/Dropbox/TODO")
+    (setq org-agenda-files (list "~/Dropbox/TODO"))
+    (setq org-archive-location "~/Dropbox/TODO_archive")
+    ;;(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+    ;;(setq org-mobile-inbox-for-pull "~/DropBox/Apps/MobileOrg/mobile.org")
+    (setq org-log-done 'time)
 
-(defun html-org-mode-save-hook()
-  "Export org-mode as HTML save hook"
-  (message "Save HTML version")
-  (org-html-export-to-html)
-  )
+    ;; From https://github.com/howardabrams/dot-files/blob/master/emacs-org.org
+    (setq org-use-speed-commands t
+	  org-return-follows-link t
+	  org-hide-emphasis-markers t
+	  org-completion-use-ido t
+	  org-outline-path-complete-in-steps nil
+	  org-src-fontify-natively t   ;; Pretty code blocks
+	  org-src-tab-acts-natively t
+	  org-confirm-babel-evaluate nil
+	  org-todo-keywords
+	    '((sequence "TODO(t)" "WAITING(w)" "|" "CANCELED(c)" "DONE(d)")))
+    )
+  :config
+  (progn
+    ;; org-mode hot keys
+    (global-set-key "\C-ca" 'org-agenda)
+    (global-set-key "\C-cc" 'org-capture)
+    (global-set-key "\C-cl" 'org-store-link)
+    (global-set-key "\C-cb" 'org-iswitchb)
+    
+    ;;(defun html-org-mode-save-hook()
+    ;;  "Export org-mode as HTML save hook"
+    ;;  (message "Save HTML version")
+    ;;  (org-html-export-to-html)
+    ;;  )
 
-;; I used to like saving .html versions of all my .org files. I don't find this
-;; useful after all. Org file rendering on github has gotten better.
-;(add-hook 'org-mode-hook 
-;          (lambda () 
-;             (add-hook 'after-save-hook 'html-org-mode-save-hook nil 'make-it-local)))
+    ;; I used to like saving .html versions of all my .org files. I
+    ;; don't find this useful after all. Org file rendering on github
+    ;; has gotten better.
+    ;;(add-hook 'org-mode-hook 
+    ;;          (lambda () 
+    ;;             (add-hook 'after-save-hook 'html-org-mode-save-hook nil 'make-it-local)))
+
+    ))
+
+;;; END Org Mode stuff
+
 
 ;; Markdown mode
 ;; to preview: C-c C-c p or C-c C-c l
@@ -358,6 +388,27 @@
 (setq vc-make-backup-files t)
 
 (setq initial-scratch-message "") ;; Start with an empty scratch buffer
+
+
+
+(use-package ob-shell
+  :defer t
+  :config
+  (setq org-babel-sh-command "bash"))
+
+;; list of babel programming languages to honor
+(org-babel-do-load-languages 'org-babel-load-languages
+			     '((sh         . t)
+			       (js         . t)
+			       (emacs-lisp . t)
+			       (perl       . t)
+			       (scala      . t)
+			       (clojure    . t)
+			       (python     . t)
+			       ; (ipython    . t)
+			       (ruby       . t)
+			       (dot        . t)
+			       (css        . t)))
 
 ;; Have different display options based on if we are running in a terminal
 ;; or running in a windowing environment.
