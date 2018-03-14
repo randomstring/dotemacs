@@ -233,6 +233,9 @@
  '(global-font-lock-mode t nil (font-lock))
  '(inhibit-startup-screen t)
  '(menu-bar-mode t)
+ '(package-selected-packages
+   (quote
+    (virtualenvwrapper ob-ipython writegood-mode web-mode use-package-chords undo-tree markdown-mode magit js2-mode flycheck elpy)))
  '(safe-local-variable-values (quote ((c-basic-indent . 4)))))
 
 
@@ -396,6 +399,19 @@
   :config
   (setq org-babel-sh-command "bash"))
 
+;; HINT: if jupyter is missing, it needs to be intalled with pip
+(use-package ob-ipython
+  :ensure t)
+
+;; https://github.com/porterjamesj/virtualenvwrapper.el
+(use-package virtualenvwrapper
+  :ensure t)
+(venv-initialize-interactive-shells)
+(venv-initialize-eshell)
+;; Use M-x venv-workon to activate virtualenvs and
+;; M-x venv-deactivate deactivate them.
+
+
 ;; list of babel programming languages to honor
 (org-babel-do-load-languages 'org-babel-load-languages
 			     '((sh         . t)
@@ -405,7 +421,7 @@
 			       (scala      . t)
 			       (clojure    . t)
 			       (python     . t)
-			       ; (ipython    . t)
+			       (ipython    . t)
 			       (ruby       . t)
 			       (dot        . t)
 			       (css        . t)))
@@ -422,3 +438,9 @@
    '(default ((t (:stipple nil :background nil :foreground nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal )))))
   )
 
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:stipple nil :background "#000000" :foreground "#eeeeee" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 160 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
