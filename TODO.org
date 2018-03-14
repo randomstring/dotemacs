@@ -15,7 +15,8 @@
 ** DONE get virtual environments working
    CLOSED: [2017-01-13 Fri 15:27]
  - emacs is now virtualenv aware, change workon via menu or command
-* TODO mine more gold from https://github.com/anschwa/emacs.d
+* CANCELLED mine more gold from https://github.com/anschwa/emacs.d
+  CLOSED: [2018-03-14 Wed 11:40]
 ** TODO use flycheck with spell check
 * CANCELLED check out http://ethanschoonover.com/solarized color theme
   CLOSED: [2018-03-13 Tue 15:09]
@@ -23,3 +24,7 @@
 * CANCELLED install Tramp https://www.gnu.org/software/tramp/ for remote file editing
   CLOSED: [2018-03-13 Tue 15:11]
  - comes pre-installed (on mac)
+* DONE get babel working
+  CLOSED: [2018-03-14 Wed 11:40]
+* TODO check out https://github.com/takaxp/org-tree-slide
+* TODO figure out capture templates https://orgmode.org/manual/Capture-templates.html#Capture-templates
