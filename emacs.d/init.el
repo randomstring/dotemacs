@@ -303,6 +303,8 @@
     
     (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
     (setq org-directory "~/Dropbox/TODO")
+    (setq org-default-notes-file
+	  (concat org-directory "/TODO.org"))
     (setq org-agenda-files (list "~/Dropbox/TODO"))
     (setq org-archive-location "~/Dropbox/TODO_archive")
     ;;(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
@@ -328,7 +330,7 @@
     (global-set-key "\C-cc" 'org-capture)
     (global-set-key "\C-cl" 'org-store-link)
     (global-set-key "\C-cb" 'org-iswitchb)
-    
+
     ;;(defun html-org-mode-save-hook()
     ;;  "Export org-mode as HTML save hook"
     ;;  (message "Save HTML version")
