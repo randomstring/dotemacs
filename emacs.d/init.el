@@ -1,9 +1,31 @@
-;; https://github.com/CachesToCaches/getting_started_with_use_package
+;;https://melpa.org/#/getting-started
 (require 'package)
-(setq package-enable-at-startup nil)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("elpy" . "https://jorgenschaefer.github.io/packages/"))
+(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+                    (not (gnutls-available-p))))
+       (proto (if no-ssl "http" "https")))
+  (when no-ssl
+    (warn "\
+Your version of Emacs does not support SSL connections,
+which is unsafe because it allows man-in-the-middle attacks.
+There are two things you can do about this warning:
+1. Install an Emacs version that does support SSL and be safe.
+2. Remove this warning from your init file so you won't see it again."))
+  ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
+  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
+  ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
+  (when (< emacs-major-version 24)
+    ;; For important compatibility libraries like cl-lib
+    (add-to-list 'package-archives (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
 (package-initialize)
+
+
+
+;; https://github.com/CachesToCaches/getting_started_with_use_package
+;;(require 'package)
+;;(setq package-enable-at-startup nil)
+;;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+;;(add-to-list 'package-archives '("elpy" . "https://jorgenschaefer.github.io/packages/"))
+;;(package-initialize)
 
 ;(when (memq window-system '(mac ns))
 ;  ( do something mac specific ))
@@ -40,7 +62,7 @@
   :defer 2
   :init
     ;; enable a virtualenv so we have flake8, etc in the path
-    (pyvenv-workon "default")
+    (pyvenv-workon "py3")
   :config
   (progn
     ;; Use Flycheck instead of Flymake
@@ -416,11 +438,11 @@
 
 ;; list of babel programming languages to honor
 (org-babel-do-load-languages 'org-babel-load-languages
-			     '((sh         . t)
+			     '((shell      . t)
 			       (js         . t)
 			       (emacs-lisp . t)
 			       (perl       . t)
-			       (scala      . t)
+;;			       (scala      . t)
 			       (clojure    . t)
 			       (python     . t)
 			       (ipython    . t)
@@ -446,3 +468,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:stipple nil :background "#000000" :foreground "#eeeeee" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 160 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
+(put 'upcase-region 'disabled nil)
