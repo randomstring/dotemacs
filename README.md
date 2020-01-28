@@ -77,13 +77,17 @@ Start by creating a default python virtual environment, this is where emacs will
 
 ## Problems
 
+Step one, google to see if there's a new and improved way to fetch *melpa* packages. Last know location is at the top of the ```init.el``` file. If you're upgrading to a new version of emacs, then you probably want to nuke ```~/.emacs.d/elpa/``` and start over.
+
+Make sure you can access the melpa repo. Try running ```M-x package-refresh-contents``` and then a test of installing a package with ```M-x package-install RET flycheck``` (just as an example to instal). 
+
 I keep running into the problem that I need to install ```use-package``` first. To do this run ```M-x package-install RET use-package RET``` and restart emacs.
 
 If emacs gets stuck loading a package, you may need to manually refresh the packages with ``M-x package-refresh-contents``. 
 
 More recent changes should prevent the above problems.
 
-If when loading a python .py file you see flake8 related loading errors. Chances are there is a problem with not having a virtual environment set. Run ```M-x elpy-config``` and make sure things look right. See ``Installing pip Modules`` above.
+Make sure the chosen python virtualenv is valid and working. If when loading a python .py file you see flake8 related loading errors. Chances are there is a problem with not having a virtual environment set. Run ```M-x elpy-config``` and make sure things look right. See ``Installing pip Modules`` above.
 
 ## Acknowledgments
 
