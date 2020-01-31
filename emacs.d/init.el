@@ -12,6 +12,7 @@ There are two things you can do about this warning:
 2. Remove this warning from your init file so you won't see it again."))
   ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
   (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
+  (add-to-list 'package-archives (cons "elpy"  (concat proto "://jorgenschaefer.github.io/packages/")) t)
   ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
   (when (< emacs-major-version 24)
     ;; For important compatibility libraries like cl-lib
@@ -39,10 +40,10 @@ There are two things you can do about this warning:
 (require 'diminish)                ;; if you use :diminish
 (require 'bind-key)                ;; if you use any :bind variant
 
-(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-(setq exec-path (append exec-path '("/usr/local/bin")))
-(setenv "PATH" (concat (getenv "PATH") ":~/.virtualenvs/default/bin"))
-(setq exec-path (append exec-path '("~/.virtualenvs/default/bin")))
+;;(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+;;(setq exec-path (append exec-path '("/usr/local/bin")))
+;;(setenv "PATH" (concat (getenv "PATH") ":~/.virtualenvs/default/bin"))
+;;(setq exec-path (append exec-path '("~/.virtualenvs/default/bin")))
 (setq user-emacs-directory "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d")
 
@@ -59,20 +60,25 @@ There are two things you can do about this warning:
 
 (use-package elpy
   :ensure t
-  :defer 2
   :init
-    ;; enable a virtualenv so we have flake8, etc in the path
-    (pyvenv-workon "py3")
-  :config
-  (progn
-    ;; Use Flycheck instead of Flymake
-    (when (require 'flycheck nil t)
-      (remove-hook 'elpy-modules 'elpy-module-flymake)
-      (remove-hook 'elpy-modules 'elpy-module-yasnippet)
-      (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
-      (add-hook 'elpy-mode-hook 'flycheck-mode))
-    (elpy-enable)
-    (setq elpy-rpc-backend "jedi")))
+  (elpy-enable))
+
+;;(use-package elpy
+;;  :ensure t
+;;  :defer 2
+;;  :init
+;;    ;; enable a virtualenv so we have flake8, etc in the path
+;;    (pyvenv-workon "default")
+;;  :config
+;;  (progn
+;;   ;; Use Flycheck instead of Flymake
+;;    (when (require 'flycheck nil t)
+;;      (remove-hook 'elpy-modules 'elpy-module-flymake)
+;;      (remove-hook 'elpy-modules 'elpy-module-yasnippet)
+;;      (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
+;;      (add-hook 'elpy-mode-hook 'flycheck-mode))
+;;    (elpy-enable)
+;;    (setq elpy-rpc-backend "jedi")))
 
 (use-package web-mode
   :ensure t
@@ -122,7 +128,7 @@ There are two things you can do about this warning:
   :defer 2
   :diminish magit-auto-revert-mode
   :init
-  (setq magit-last-seen-setup-instructions "1.4.0")
+;;  (setq magit-last-seen-setup-instructions "1.4.0")
   :config
   (bind-key "q" 'magit-quit-session magit-status-mode-map))
 
@@ -257,7 +263,7 @@ There are two things you can do about this warning:
  '(menu-bar-mode t)
  '(package-selected-packages
    (quote
-    (virtualenvwrapper ob-ipython writegood-mode web-mode use-package-chords undo-tree markdown-mode magit js2-mode flycheck elpy)))
+    (flycheck-pycheckers flycheck-pyflakes jedi elpygen magit-org-todos virtualenvwrapper ob-ipython writegood-mode web-mode use-package-chords undo-tree markdown-mode magit js2-mode flycheck elpy)))
  '(safe-local-variable-values (quote ((c-basic-indent . 4)))))
 
 
