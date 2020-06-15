@@ -1,24 +1,23 @@
 ;;https://melpa.org/#/getting-started
 (require 'package)
+
+(require 'package)
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                     (not (gnutls-available-p))))
        (proto (if no-ssl "http" "https")))
-  (when no-ssl
-    (warn "\
+  (when no-ssl (warn "\
 Your version of Emacs does not support SSL connections,
 which is unsafe because it allows man-in-the-middle attacks.
 There are two things you can do about this warning:
 1. Install an Emacs version that does support SSL and be safe.
 2. Remove this warning from your init file so you won't see it again."))
-  ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
   (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
   (add-to-list 'package-archives (cons "elpy"  (concat proto "://jorgenschaefer.github.io/packages/")) t)
+  ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
+  ;; and `package-pinned-packages`. Most users will not need or want to do this.
   ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
-  (when (< emacs-major-version 24)
-    ;; For important compatibility libraries like cl-lib
-    (add-to-list 'package-archives (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
+  )
 (package-initialize)
-
 
 
 ;; https://github.com/CachesToCaches/getting_started_with_use_package
@@ -46,6 +45,8 @@ There are two things you can do about this warning:
 ;;(setq exec-path (append exec-path '("~/.virtualenvs/default/bin")))
 (setq user-emacs-directory "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d")
+
+(use-package diminish)
 
 (use-package flycheck
   :ensure t
@@ -179,7 +180,11 @@ There are two things you can do about this warning:
 ; set functions for ispell - spell ckecker
 ;
 ; http://stackoverflow.com/questions/19022015/emacs-on-mac-os-x-how-to-get-spell-check-to-work
-(setq ispell-program-name "aspell")
+(setq exec-path (append "/usr/local/bin" exec-path))
+
+(setq ispell-program-name "/usr/local/bin/aspell")
+;; Please note ispell-extra-args contains ACTUAL parameters passed to aspell
+(setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))
 (autoload 'ispell "ispell" "Run ispell over buffer" t)
 (autoload 'ispell-region "ispell" "Run ispell over region" t)
 (autoload 'ispell-word "ispell" "Check word under cursor" t)
@@ -190,6 +195,7 @@ There are two things you can do about this warning:
 (define-key esc-map "$" 'ispell-word)
 (define-key esc-map "#" 'ispell-buffer)
 (define-key esc-map "s" 'ispell-buffer)
+
 
 ;
 ; other things
@@ -206,6 +212,12 @@ There are two things you can do about this warning:
 ; treat .tt (perl template toolkit) as html mode
 (add-to-list 'auto-mode-alist '("\\.tt$" . html-mode))
 
+(use-package yaml-mode
+  :ensure t
+  :defer 2
+  :mode "\\.yaml\\'")
+(add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+
 ;; octave and matlab mode
 (autoload 'octave-mode "octave" nil t)
 (setq auto-mode-alist
@@ -213,7 +225,7 @@ There are two things you can do about this warning:
 
 ;;
 ;; Mecurial
-(load "~/.emacs.d/mercurial.el")
+;;(load "~/.emacs.d/mercurial.el")
 
 ;;----------------------------------------------------------------------------
 ;; Allow access from emacsclient
@@ -242,6 +254,15 @@ There are two things you can do about this warning:
   (add-hook 'local-write-file-hooks 'untabify-buffer)
   (setq indent-tabs-mode nil))
 
+
+(add-hook 'yaml-mode-hook 'my-yaml-mode-hook)
+
+(defun my-yaml-mode-hook ()
+  (interactive)
+  (add-hook 'local-write-file-hooks 'delete-trailing-whitespace)
+  (add-hook 'local-write-file-hooks 'untabify-buffer)
+  (setq indent-tabs-mode nil))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -263,7 +284,7 @@ There are two things you can do about this warning:
  '(menu-bar-mode t)
  '(package-selected-packages
    (quote
-    (flycheck-pycheckers flycheck-pyflakes jedi elpygen magit-org-todos virtualenvwrapper ob-ipython writegood-mode web-mode use-package-chords undo-tree markdown-mode magit js2-mode flycheck elpy)))
+    (ensure flycheck-pycheckers flycheck-pyflakes jedi elpygen magit-org-todos writegood-mode web-mode use-package-chords undo-tree markdown-mode magit js2-mode flycheck elpy yaml-mode)))
  '(safe-local-variable-values (quote ((c-basic-indent . 4)))))
 
 
@@ -349,7 +370,7 @@ There are two things you can do about this warning:
 	  org-src-tab-acts-natively t
 	  org-confirm-babel-evaluate nil
 	  org-todo-keywords
-	    '((sequence "TODO(t)" "WAITING(w)" "|" "CANCELED(c)" "DONE(d)")))
+	    '((sequence "TODO(t)" "WAITING(w)" "|" "CANCELED(c)" "DONE(d)" "NOTE(n)")))
     )
   :config
   (progn
@@ -380,18 +401,18 @@ There are two things you can do about this warning:
 ;; Markdown mode
 ;; to preview: C-c C-c p or C-c C-c l
 ;; to install markdown on the mac run "brew install markdown"
-(use-package markdown-mode
-  :ensure t
-  :commands (markdown-mode gfm-mode)
-  :mode
-  (("README\\.md\\'" . gfm-mode)
-   ("\\.md\\'" . markdown-mode)
-   ("\\.markdown\\'" . markdown-mode))
-  :init
-  (if (memq window-system '(mac ns))
-      (setq markdown-command "multimarkdown") ; mac uses multimarkdown
-    (setq markdown-command "markdown"))      ; unix uses markdown
-  )
+;(use-package markdown-mode
+;  :ensure t
+;  :commands (markdown-mode gfm-mode)
+;  :mode
+;  (("README\\.md\\'" . gfm-mode)
+;   ("\\.md\\'" . gfm-mode)
+;   ("\\.markdown\\'" . markdown-mode))
+;  :init
+;  (if (memq window-system '(mac ns))
+;    (setq markdown-command "multimarkdown")  ; mac uses multimarkdown
+;    (setq markdown-command "markdown"))      ; unix uses markdown
+;  )
 
 ;; Github flavored Markdown
 (autoload 'gfm-mode "markdown-mode"
@@ -430,14 +451,18 @@ There are two things you can do about this warning:
   (setq org-babel-sh-command "bash"))
 
 ;; HINT: if jupyter is missing, it needs to be intalled with pip
-(use-package ob-ipython
-  :ensure t)
+;(use-package ob-ipython
+;  :ensure t)
 
 ;; https://github.com/porterjamesj/virtualenvwrapper.el
-(use-package virtualenvwrapper
-  :ensure t)
+;(use-package virtualenvwrapper
+;  :ensure t
+;  :defer t
+;)
+(require 'virtualenvwrapper)
 (venv-initialize-interactive-shells)
 (venv-initialize-eshell)
+
 ;; Use M-x venv-workon to activate virtualenvs and
 ;; M-x venv-deactivate deactivate them.
 
@@ -451,9 +476,10 @@ There are two things you can do about this warning:
 ;;			       (scala      . t)
 			       (clojure    . t)
 			       (python     . t)
-			       (ipython    . t)
+;;			       (ipython    . t)
 			       (ruby       . t)
 			       (dot        . t)
+			       (java       . t)
 			       (css        . t)))
 
 ;; Have different display options based on if we are running in a terminal
