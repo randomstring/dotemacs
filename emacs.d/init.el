@@ -1,24 +1,12 @@
+; to inspect init errors, run "emacs --debug-init"
+
+; unset this debug line to see full stack for erros
+; (setq debug-on-error t)
+
 ;;https://melpa.org/#/getting-started
 (require 'package)
-
-(require 'package)
-(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-                    (not (gnutls-available-p))))
-       (proto (if no-ssl "http" "https")))
-  (when no-ssl (warn "\
-Your version of Emacs does not support SSL connections,
-which is unsafe because it allows man-in-the-middle attacks.
-There are two things you can do about this warning:
-1. Install an Emacs version that does support SSL and be safe.
-2. Remove this warning from your init file so you won't see it again."))
-  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
-  (add-to-list 'package-archives (cons "elpy"  (concat proto "://jorgenschaefer.github.io/packages/")) t)
-  ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
-  ;; and `package-pinned-packages`. Most users will not need or want to do this.
-  ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
-  )
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
-
 
 ;; https://github.com/CachesToCaches/getting_started_with_use_package
 ;;(require 'package)
@@ -27,8 +15,11 @@ There are two things you can do about this warning:
 ;;(add-to-list 'package-archives '("elpy" . "https://jorgenschaefer.github.io/packages/"))
 ;;(package-initialize)
 
+; BROKEN??
 ;(when (memq window-system '(mac ns))
-;  ( do something mac specific ))
+;  (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+;  (setq exec-path (append exec-path '("/usr/local/bin")))
+;  )
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -39,12 +30,13 @@ There are two things you can do about this warning:
 (require 'diminish)                ;; if you use :diminish
 (require 'bind-key)                ;; if you use any :bind variant
 
-;;(setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
-;;(setq exec-path (append exec-path '("/usr/local/bin")))
 ;;(setenv "PATH" (concat (getenv "PATH") ":~/.virtualenvs/default/bin"))
 ;;(setq exec-path (append exec-path '("~/.virtualenvs/default/bin")))
 (setq user-emacs-directory "~/.emacs.d")
 (add-to-list 'load-path "~/.emacs.d")
+
+(use-package pyenv-mode)
+(pyenv-mode)
 
 (use-package diminish)
 
@@ -126,7 +118,7 @@ There are two things you can do about this warning:
 
 (use-package magit
   :ensure t
-  :defer 2
+;  :defer 2  ;; this breaks things. why?
   :diminish magit-auto-revert-mode
   :init
 ;;  (setq magit-last-seen-setup-instructions "1.4.0")
@@ -250,8 +242,8 @@ There are two things you can do about this warning:
 
 (defun my-perl-mode-hook ()
   (interactive)
-  (add-hook 'local-write-file-hooks 'delete-trailing-whitespace)
-  (add-hook 'local-write-file-hooks 'untabify-buffer)
+  (add-hook 'write-file-functions 'delete-trailing-whitespace)
+  (add-hook 'write-file-functions 'untabify-buffer)
   (setq indent-tabs-mode nil))
 
 
@@ -259,8 +251,8 @@ There are two things you can do about this warning:
 
 (defun my-yaml-mode-hook ()
   (interactive)
-  (add-hook 'local-write-file-hooks 'delete-trailing-whitespace)
-  (add-hook 'local-write-file-hooks 'untabify-buffer)
+  (add-hook 'write-file-functions 'delete-trailing-whitespace)
+  (add-hook 'write-file-functions 'untabify-buffer)
   (setq indent-tabs-mode nil))
 
 (custom-set-variables
@@ -283,9 +275,8 @@ There are two things you can do about this warning:
  '(inhibit-startup-screen t)
  '(menu-bar-mode t)
  '(package-selected-packages
-   (quote
-    (ensure flycheck-pycheckers flycheck-pyflakes jedi elpygen magit-org-todos writegood-mode web-mode use-package-chords undo-tree markdown-mode magit js2-mode flycheck elpy yaml-mode)))
- '(safe-local-variable-values (quote ((c-basic-indent . 4)))))
+   '(pydoc pyenv-mode-auto magithub python-mode pyenv-mode ensure flycheck-pycheckers flycheck-pyflakes jedi elpygen magit-org-todos writegood-mode web-mode use-package-chords undo-tree markdown-mode magit js2-mode flycheck elpy yaml-mode))
+ '(safe-local-variable-values '((c-basic-indent . 4))))
 
 
 (defun ask-before-closing ()
@@ -459,6 +450,7 @@ There are two things you can do about this warning:
 ;  :ensure t
 ;  :defer t
 ;)
+(require 'virtualenv)
 (require 'virtualenvwrapper)
 (venv-initialize-interactive-shells)
 (venv-initialize-eshell)
@@ -499,5 +491,5 @@ There are two things you can do about this warning:
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:stipple nil :background "#000000" :foreground "#eeeeee" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 160 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
+ '(default ((t (:stipple nil :background "#000000" :foreground "#eeeeee" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 180 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
 (put 'upcase-region 'disabled nil)
