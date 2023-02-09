@@ -21,6 +21,11 @@
 ;  (setq exec-path (append exec-path '("/usr/local/bin")))
 ;  )
 
+(when (require 'mac-print-mode nil t)
+  (mac-print-mode 1)
+  (global-set-key (kbd "M-p") 'mac-print-buffer))
+
+
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -211,9 +216,9 @@
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 
 ;; octave and matlab mode
-(autoload 'octave-mode "octave" nil t)
-(setq auto-mode-alist
-      (cons '("\\.m$" . octave-mode) auto-mode-alist))
+;;(autoload 'octave-mode "octave" nil t)
+;;(setq auto-mode-alist
+;;      (cons '("\\.m$" . octave-mode) auto-mode-alist))
 
 ;;
 ;; Mecurial
@@ -234,26 +239,27 @@
 (setq which-function-modes t)
 
 ;; tab fixing
-(add-hook 'perl-mode-hook 'my-perl-mode-hook)
+;;(add-hook 'perl-mode-hook 'my-perl-mode-hook)
 
 (defun untabify-buffer ()
     (interactive)
     (untabify (point-min) (point-max)))
 
-(defun my-perl-mode-hook ()
-  (interactive)
-  (add-hook 'write-file-functions 'delete-trailing-whitespace)
-  (add-hook 'write-file-functions 'untabify-buffer)
-  (setq indent-tabs-mode nil))
+;; perl hooks are hanging on close
+;;(defun my-perl-mode-hook ()
+;;  (interactive)
+;;  (add-hook 'write-file-functions 'delete-trailing-whitespace)
+;;  (add-hook 'write-file-functions 'untabify-buffer)
+;;  (setq indent-tabs-mode nil))
 
 
-(add-hook 'yaml-mode-hook 'my-yaml-mode-hook)
+;;(add-hook 'yaml-mode-hook 'my-yaml-mode-hook)
 
-(defun my-yaml-mode-hook ()
-  (interactive)
-  (add-hook 'write-file-functions 'delete-trailing-whitespace)
-  (add-hook 'write-file-functions 'untabify-buffer)
-  (setq indent-tabs-mode nil))
+;;(defun my-yaml-mode-hook ()
+;;  (interactive)
+;;  (add-hook 'write-file-functions 'delete-trailing-whitespace)
+;;  (add-hook 'write-file-functions 'untabify-buffer)
+;;  (setq indent-tabs-mode nil))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -485,6 +491,11 @@
   (custom-set-faces
    '(default ((t (:stipple nil :background nil :foreground nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal )))))
   )
+
+;; Font Help
+;; Use ` S-down-mouse-1 ' or ` M-x menu-set-font ' to see the font and fontset menu. 
+
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
